@@ -25,7 +25,7 @@ class TestConditionEvaluator:
         assert result == True
 
     def test_hasOwner_without_owners(self):
-        """Test hasOwner returns False when dataset has no owners"""
+
         self.mock_client.execute_graphql.return_value = {
             "data": {
                 "dataset": {
@@ -37,7 +37,7 @@ class TestConditionEvaluator:
         assert result == False
 
     def test_hasDescription_with_description(self):
-        """Test hasDescription returns True when dataset has description"""
+
         self.mock_client.execute_graphql.return_value = {
             "data": {
                 "dataset": {
@@ -49,7 +49,7 @@ class TestConditionEvaluator:
         assert result == True
 
     def test_hasDescription_without_description(self):
-        """Test hasDescription returns False when dataset has no description"""
+
         self.mock_client.execute_graphql.return_value = {
             "data": {
                 "dataset": {
@@ -61,7 +61,7 @@ class TestConditionEvaluator:
         assert result == False
 
     def test_hasTag_with_tags(self):
-        """Test hasTag returns True when dataset has tags"""
+
         self.mock_client.execute_graphql.return_value = {
             "data": {
                 "dataset": {
@@ -75,7 +75,7 @@ class TestConditionEvaluator:
         assert result == True
 
     def test_hasTag_without_tags(self):
-        """Test hasTag returns False when dataset has no tags"""
+
         self.mock_client.execute_graphql.return_value = {
             "data": {
                 "dataset": {
