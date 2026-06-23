@@ -1,7 +1,7 @@
 datahub:
-  server: "http://localhost:8080"
+  server: "http://host.docker.internal:8080"
   token: null
-
+  
 source:
   csv:
     file_path: "evolve_test.csv"
