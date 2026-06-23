@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Data Ingestion Service
+  data-ingestion:
+    build:
+      context: .
+      dockerfile: Dockerfile.ingestion
+    container_name: data-ingestion
+    volumes:
+      - ./config.yaml:/app/config.yaml
+      - ./sample.csv:/app/sample.csv
+      - ./evolve_test.csv:/app/evolve_test.csv
+      - ./ingestion.log:/app/ingestion.log
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - datahub-network
+
+  # Governance Engine Service
+  governance-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: governance-engine
+    volumes:
+      - ./engine_config.yaml:/app/engine_config.yaml
+      - ./governance_rules.yaml:/app/governance_rules.yaml
+      - ./datasets.csv:/app/datasets.csv
+      - ./governance_engine.log:/app/governance_engine.log
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - data-ingestion
+    networks:
+      - datahub-network
+
+networks:
+  datahub-network:
+    external: true
+    name: datahub-network  # Change to match your DataHub network

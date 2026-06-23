@@ -1,0 +1,130 @@
+2026-06-22 18:08:17,432 - INFO - 📄 Reading: datasets.csv
+2026-06-22 18:08:17,432 - ERROR - Pipeline failed: CSV file not found: datasets.csv
+Traceback (most recent call last):
+  File "/Users/nadakhalil/Henkel_DataHub/ingest_csv_to_datahub.py", line 244, in main
+    datasets = reader.read_datasets()
+  File "/Users/nadakhalil/Henkel_DataHub/ingest_csv_to_datahub.py", line 72, in read_datasets
+    raise FileNotFoundError(f"CSV file not found: {self.file_path}")
+FileNotFoundError: CSV file not found: datasets.csv
+2026-06-22 18:10:04,962 - INFO - 📄 Reading: datasets.csv
+2026-06-22 18:10:04,963 - ERROR - Pipeline failed: CSV file not found: datasets.csv
+Traceback (most recent call last):
+  File "/Users/nadakhalil/Henkel_DataHub/ingest_csv_to_datahub.py", line 244, in main
+    datasets = reader.read_datasets()
+  File "/Users/nadakhalil/Henkel_DataHub/ingest_csv_to_datahub.py", line 72, in read_datasets
+    raise FileNotFoundError(f"CSV file not found: {self.file_path}")
+FileNotFoundError: CSV file not found: datasets.csv
+2026-06-22 18:10:41,396 - INFO - 📄 Reading: datasets.csv
+2026-06-22 18:10:41,396 - INFO - 📊 Found 3 datasets
+2026-06-22 18:10:41,397 - INFO - 🔍 DRY RUN MODE - No data will be written to DataHub
+2026-06-22 18:10:41,397 - INFO - 
+[1/3] Processing...
+2026-06-22 18:10:41,397 - INFO - 📝 Processing: user_profiles
+2026-06-22 18:10:41,397 - INFO -    [DRY RUN] Would emit: Properties for user_profiles
+2026-06-22 18:10:41,397 - INFO -    [DRY RUN] Would emit: Schema for user_profiles
+2026-06-22 18:10:41,397 - INFO -    [DRY RUN] Would emit: Ownership for user_profiles
+2026-06-22 18:10:41,397 - INFO - ✅ Successfully ingested: user_profiles
+2026-06-22 18:10:41,397 - INFO - 
+[2/3] Processing...
+2026-06-22 18:10:41,397 - INFO - 📝 Processing: sales_transactions
+2026-06-22 18:10:41,397 - INFO -    [DRY RUN] Would emit: Properties for sales_transactions
+2026-06-22 18:10:41,397 - INFO -    [DRY RUN] Would emit: Schema for sales_transactions
+2026-06-22 18:10:41,397 - INFO -    [DRY RUN] Would emit: Ownership for sales_transactions
+2026-06-22 18:10:41,397 - INFO - ✅ Successfully ingested: sales_transactions
+2026-06-22 18:10:41,397 - INFO - 
+[3/3] Processing...
+2026-06-22 18:10:41,397 - INFO - 📝 Processing: product_catalog
+2026-06-22 18:10:41,397 - INFO -    [DRY RUN] Would emit: Properties for product_catalog
+2026-06-22 18:10:41,397 - INFO -    [DRY RUN] Would emit: Schema for product_catalog
+2026-06-22 18:10:41,398 - INFO -    [DRY RUN] Would emit: Ownership for product_catalog
+2026-06-22 18:10:41,398 - INFO - ✅ Successfully ingested: product_catalog
+2026-06-22 18:12:58,951 - INFO - 📄 Reading: datasets.csv
+2026-06-22 18:12:58,952 - INFO - 📊 Found 3 datasets
+2026-06-22 18:12:58,953 - INFO - ✅ Connected to DataHub at http://localhost:8080
+2026-06-22 18:12:58,953 - INFO - 
+[1/3] Processing...
+2026-06-22 18:12:58,953 - INFO - 📝 Processing: user_profiles
+2026-06-22 18:12:59,204 - ERROR - ❌ Failed to ingest user_profiles: ('Unable to emit metadata to DataHub GMS: Failed to validate record with class com.linkedin.schema.SchemaMetadata: ERROR :: /platform :: "Provided urn postgres" is invalid\n', {'exceptionClass': 'com.linkedin.restli.server.RestLiServiceException', 'message': 'Failed to validate record with class com.linkedin.schema.SchemaMetadata: ERROR :: /platform :: "Provided urn postgres" is invalid\n', 'status': 422})
+2026-06-22 18:12:59,205 - INFO - 
+[2/3] Processing...
+2026-06-22 18:12:59,205 - INFO - 📝 Processing: sales_transactions
+2026-06-22 18:12:59,371 - ERROR - ❌ Failed to ingest sales_transactions: ('Unable to emit metadata to DataHub GMS: Failed to validate record with class com.linkedin.schema.SchemaMetadata: ERROR :: /platform :: "Provided urn snowflake" is invalid\n', {'exceptionClass': 'com.linkedin.restli.server.RestLiServiceException', 'message': 'Failed to validate record with class com.linkedin.schema.SchemaMetadata: ERROR :: /platform :: "Provided urn snowflake" is invalid\n', 'status': 422})
+2026-06-22 18:12:59,371 - INFO - 
+[3/3] Processing...
+2026-06-22 18:12:59,371 - INFO - 📝 Processing: product_catalog
+2026-06-22 18:12:59,499 - ERROR - ❌ Failed to ingest product_catalog: ('Unable to emit metadata to DataHub GMS: Failed to validate record with class com.linkedin.schema.SchemaMetadata: ERROR :: /platform :: "Provided urn bigquery" is invalid\n', {'exceptionClass': 'com.linkedin.restli.server.RestLiServiceException', 'message': 'Failed to validate record with class com.linkedin.schema.SchemaMetadata: ERROR :: /platform :: "Provided urn bigquery" is invalid\n', 'status': 422})
+2026-06-22 18:16:21,867 - INFO - 📄 Reading: datasets.csv
+2026-06-22 18:16:21,867 - INFO - 📊 Found 3 datasets
+2026-06-22 18:16:21,867 - INFO - ✅ Connected to DataHub at http://localhost:9002
+2026-06-22 18:16:21,868 - INFO - 
+[1/3] Processing...
+2026-06-22 18:16:21,868 - INFO - 📝 Processing: user_profiles
+2026-06-22 18:16:21,941 - ERROR - ❌ Failed to ingest user_profiles: ('Unable to emit metadata to DataHub GMS: None', {'error': 'Not Found', 'status': 404})
+2026-06-22 18:16:21,941 - INFO - 
+[2/3] Processing...
+2026-06-22 18:16:21,941 - INFO - 📝 Processing: sales_transactions
+2026-06-22 18:16:21,946 - ERROR - ❌ Failed to ingest sales_transactions: ('Unable to emit metadata to DataHub GMS: None', {'error': 'Not Found', 'status': 404})
+2026-06-22 18:16:21,947 - INFO - 
+[3/3] Processing...
+2026-06-22 18:16:21,947 - INFO - 📝 Processing: product_catalog
+2026-06-22 18:16:21,951 - ERROR - ❌ Failed to ingest product_catalog: ('Unable to emit metadata to DataHub GMS: None', {'error': 'Not Found', 'status': 404})
+2026-06-22 18:17:46,451 - INFO - 📄 Reading: datasets.csv
+2026-06-22 18:17:46,452 - INFO - 📊 Found 3 datasets
+2026-06-22 18:17:46,452 - INFO - ✅ Connected to DataHub at http://localhost:9002
+2026-06-22 18:17:46,452 - INFO - 
+[1/3] Processing user_profiles...
+2026-06-22 18:17:46,452 - INFO -    URN: urn:li:dataset:(urn:li:dataPlatform:postgres,user_profiles,PROD)
+2026-06-22 18:17:46,479 - ERROR -    ❌ Failed: ('Unable to emit metadata to DataHub GMS: None', {'error': 'Not Found', 'status': 404})
+2026-06-22 18:17:46,479 - INFO - 
+[2/3] Processing sales_transactions...
+2026-06-22 18:17:46,479 - INFO -    URN: urn:li:dataset:(urn:li:dataPlatform:snowflake,sales_transactions,PROD)
+2026-06-22 18:17:46,483 - ERROR -    ❌ Failed: ('Unable to emit metadata to DataHub GMS: None', {'error': 'Not Found', 'status': 404})
+2026-06-22 18:17:46,483 - INFO - 
+[3/3] Processing product_catalog...
+2026-06-22 18:17:46,483 - INFO -    URN: urn:li:dataset:(urn:li:dataPlatform:bigquery,product_catalog,PROD)
+2026-06-22 18:17:46,487 - ERROR -    ❌ Failed: ('Unable to emit metadata to DataHub GMS: None', {'error': 'Not Found', 'status': 404})
+2026-06-22 18:21:34,294 - INFO - 📄 Reading: datasets.csv
+2026-06-22 18:21:34,294 - INFO - 📊 Found 3 datasets
+2026-06-22 18:21:34,295 - INFO - ✅ Connected to DataHub at http://localhost:8080
+2026-06-22 18:21:34,295 - INFO - 
+[1/3] Processing user_profiles...
+2026-06-22 18:21:34,295 - INFO -    URN: urn:li:dataset:(urn:li:dataPlatform:postgres,user_profiles,PROD)
+2026-06-22 18:21:34,395 - INFO -    ✅ Emitted properties
+2026-06-22 18:21:34,427 - ERROR -    ❌ Failed: ('Unable to emit metadata to DataHub GMS: Invalid format for aspect: dataset\n Cause: ERROR :: /platform :: "Provided urn urn:li:dataset:(urn:li:dataPlatform:postgres,user_profiles,PROD)" is invalid: Unable to instantiate urn type: DataPlatformUrn with urn: urn:li:dataset:(urn:li:dataPlatform:postgres,user_profiles,PROD)\n', {'exceptionClass': 'com.linkedin.restli.server.RestLiServiceException', 'message': 'Invalid format for aspect: dataset\n Cause: ERROR :: /platform :: "Provided urn urn:li:dataset:(urn:li:dataPlatform:postgres,user_profiles,PROD)" is invalid: Unable to instantiate urn type: DataPlatformUrn with urn: urn:li:dataset:(urn:li:dataPlatform:postgres,user_profiles,PROD)\n', 'status': 422})
+2026-06-22 18:21:34,427 - INFO - 
+[2/3] Processing sales_transactions...
+2026-06-22 18:21:34,427 - INFO -    URN: urn:li:dataset:(urn:li:dataPlatform:snowflake,sales_transactions,PROD)
+2026-06-22 18:21:34,455 - INFO -    ✅ Emitted properties
+2026-06-22 18:21:34,474 - ERROR -    ❌ Failed: ('Unable to emit metadata to DataHub GMS: Invalid format for aspect: dataset\n Cause: ERROR :: /platform :: "Provided urn urn:li:dataset:(urn:li:dataPlatform:snowflake,sales_transactions,PROD)" is invalid: Unable to instantiate urn type: DataPlatformUrn with urn: urn:li:dataset:(urn:li:dataPlatform:snowflake,sales_transactions,PROD)\n', {'exceptionClass': 'com.linkedin.restli.server.RestLiServiceException', 'message': 'Invalid format for aspect: dataset\n Cause: ERROR :: /platform :: "Provided urn urn:li:dataset:(urn:li:dataPlatform:snowflake,sales_transactions,PROD)" is invalid: Unable to instantiate urn type: DataPlatformUrn with urn: urn:li:dataset:(urn:li:dataPlatform:snowflake,sales_transactions,PROD)\n', 'status': 422})
+2026-06-22 18:21:34,474 - INFO - 
+[3/3] Processing product_catalog...
+2026-06-22 18:21:34,474 - INFO -    URN: urn:li:dataset:(urn:li:dataPlatform:bigquery,product_catalog,PROD)
+2026-06-22 18:21:34,503 - INFO -    ✅ Emitted properties
+2026-06-22 18:21:34,521 - ERROR -    ❌ Failed: ('Unable to emit metadata to DataHub GMS: Invalid format for aspect: dataset\n Cause: ERROR :: /platform :: "Provided urn urn:li:dataset:(urn:li:dataPlatform:bigquery,product_catalog,PROD)" is invalid: Unable to instantiate urn type: DataPlatformUrn with urn: urn:li:dataset:(urn:li:dataPlatform:bigquery,product_catalog,PROD)\n', {'exceptionClass': 'com.linkedin.restli.server.RestLiServiceException', 'message': 'Invalid format for aspect: dataset\n Cause: ERROR :: /platform :: "Provided urn urn:li:dataset:(urn:li:dataPlatform:bigquery,product_catalog,PROD)" is invalid: Unable to instantiate urn type: DataPlatformUrn with urn: urn:li:dataset:(urn:li:dataPlatform:bigquery,product_catalog,PROD)\n', 'status': 422})
+2026-06-22 18:22:42,472 - INFO - 📄 Reading: datasets.csv
+2026-06-22 18:22:42,472 - INFO - 📊 Found 3 datasets
+2026-06-22 18:22:42,473 - INFO - ✅ Connected to DataHub at http://localhost:8080
+2026-06-22 18:22:42,473 - INFO - 
+[1/3] Processing user_profiles...
+2026-06-22 18:22:42,473 - INFO -    Dataset URN: urn:li:dataset:(urn:li:dataPlatform:postgres,user_profiles,PROD)
+2026-06-22 18:22:42,473 - INFO -    Platform URN: urn:li:dataPlatform:postgres
+2026-06-22 18:22:42,557 - INFO -    ✅ Emitted properties
+2026-06-22 18:22:42,601 - INFO -    ✅ Emitted schema (4 fields)
+2026-06-22 18:22:42,633 - INFO -    ✅ Emitted ownership (1 owners)
+2026-06-22 18:22:42,633 - INFO -    ✅ Successfully ingested!
+2026-06-22 18:22:42,633 - INFO - 
+[2/3] Processing sales_transactions...
+2026-06-22 18:22:42,633 - INFO -    Dataset URN: urn:li:dataset:(urn:li:dataPlatform:snowflake,sales_transactions,PROD)
+2026-06-22 18:22:42,633 - INFO -    Platform URN: urn:li:dataPlatform:snowflake
+2026-06-22 18:22:42,671 - INFO -    ✅ Emitted properties
+2026-06-22 18:22:42,704 - INFO -    ✅ Emitted schema (4 fields)
+2026-06-22 18:22:42,739 - INFO -    ✅ Emitted ownership (1 owners)
+2026-06-22 18:22:42,739 - INFO -    ✅ Successfully ingested!
+2026-06-22 18:22:42,739 - INFO - 
+[3/3] Processing product_catalog...
+2026-06-22 18:22:42,740 - INFO -    Dataset URN: urn:li:dataset:(urn:li:dataPlatform:bigquery,product_catalog,PROD)
+2026-06-22 18:22:42,740 - INFO -    Platform URN: urn:li:dataPlatform:bigquery
+2026-06-22 18:22:42,771 - INFO -    ✅ Emitted properties
+2026-06-22 18:22:42,808 - INFO -    ✅ Emitted schema (4 fields)
+2026-06-22 18:22:42,948 - INFO -    ✅ Emitted ownership (1 owners)
+2026-06-22 18:22:42,948 - INFO -    ✅ Successfully ingested!

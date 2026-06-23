@@ -1,0 +1,12 @@
+source:
+  type: file
+  config:
+    filename: data/sample_data.csv
+    platform: postgres
+    # The file source expects a specific format
+    table_name: sample_db
+
+sink:
+  type: datahub-rest
+  config:
+    server: http://localhost:8080

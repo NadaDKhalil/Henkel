@@ -1,0 +1,8 @@
+table_name,column_name,data_type,description
+users,id,integer,Primary key for users
+users,name,varchar,Full name of user
+users,email,varchar,Email address
+orders,id,integer,Primary key for orders
+orders,user_id,integer,Foreign key to users
+orders,amount,decimal,Order amount
+orders,status,varchar,Order status

@@ -1,0 +1,4 @@
+dataset_name,platform,description,fields,owner
+user_profiles,postgres,Contains user profile information,"id:integer,name:string,email:string,created_at:timestamp",john@company.com
+sales_transactions,snowflake,Daily sales records,"transaction_id:integer,amount:decimal,date:date,customer_id:integer",analytics@company.com
+product_catalog,bigquery,Product master data,"product_id:integer,name:string,price:decimal,category:string",engineering@company.com

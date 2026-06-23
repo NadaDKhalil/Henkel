@@ -1,0 +1,13 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy ingestion files
+COPY ingest_csv.py .
+COPY config.yaml .
+COPY sample.csv .
+
+CMD ["python", "ingest_csv.py", "config.yaml"]

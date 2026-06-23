@@ -1,0 +1,16 @@
+datahub:
+  server: "http://localhost:8080"
+  token: null
+
+source:
+  csv:
+    file_path: "evolve_test.csv"
+    delimiter: ","
+
+ingestion:
+  dry_run: false
+  batch_size: 10
+
+logging:
+  level: "INFO"
+  file: "ingestion.log" 

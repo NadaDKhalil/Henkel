@@ -1,0 +1,7 @@
+acryl-datahub[datahub-rest]
+acryl-datahub[datahub-graphql]
+pandas
+sqlalchemy
+pyyaml
+pytest
+python-dotenv

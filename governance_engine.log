@@ -1,0 +1,44 @@
+2026-06-22 18:36:15,487 [INFO] 📋 Loaded 5 rules from governance_rules.yaml
+2026-06-22 18:36:15,488 [INFO] 📊 Fetched 3 datasets from DataHub
+2026-06-22 18:36:15,488 [INFO] 🔍 Running 5 rules against 3 datasets
+2026-06-22 18:36:15,488 [INFO] 
+📏 Rule: All datasets must have owners
+2026-06-22 18:36:15,488 [INFO]    Ensure every dataset has at least one owner assigned
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:Compliant' to user_profiles
+2026-06-22 18:36:15,488 [INFO]    [PASS] user_profiles - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:Compliant' to sales_transactions
+2026-06-22 18:36:15,488 [INFO]    [PASS] sales_transactions - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:NeedsOwner' to unnamed_table
+2026-06-22 18:36:15,488 [INFO]    [FAIL] unnamed_table - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO] 
+📏 Rule: All datasets must have descriptions
+2026-06-22 18:36:15,488 [INFO]    Ensure every dataset has a meaningful description
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:HasDescription' to user_profiles
+2026-06-22 18:36:15,488 [INFO]    [PASS] user_profiles - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:HasDescription' to sales_transactions
+2026-06-22 18:36:15,488 [INFO]    [PASS] sales_transactions - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:NeedsDescription' to unnamed_table
+2026-06-22 18:36:15,488 [INFO]    [FAIL] unnamed_table - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO] 
+📏 Rule: Schema must have minimum fields
+2026-06-22 18:36:15,488 [INFO]    Ensure datasets have at least 2 fields defined
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:ValidSchema' to user_profiles
+2026-06-22 18:36:15,488 [INFO]    [PASS] user_profiles - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:ValidSchema' to sales_transactions
+2026-06-22 18:36:15,488 [INFO]    [PASS] sales_transactions - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:InsufficientSchema' to unnamed_table
+2026-06-22 18:36:15,488 [INFO]    [FAIL] unnamed_table - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO] 
+📏 Rule: Snowflake datasets need PII check
+2026-06-22 18:36:15,488 [INFO]    Flag Snowflake datasets for PII review
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:NeedsPIIReview' to sales_transactions
+2026-06-22 18:36:15,488 [INFO]    [PASS] sales_transactions - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO] 
+📏 Rule: Production-ready check
+2026-06-22 18:36:15,488 [INFO]    Dataset meets all production quality standards
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:ProductionReady' to user_profiles
+2026-06-22 18:36:15,488 [INFO]    [PASS] user_profiles - Applied 1 action(s)
+2026-06-22 18:36:15,488 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:ProductionReady' to sales_transactions
+2026-06-22 18:36:15,488 [INFO]    [PASS] sales_transactions - Applied 1 action(s)
+2026-06-22 18:36:15,489 [INFO]    [DRY RUN] Would add tag 'urn:li:tag:NeedsImprovement' to unnamed_table
+2026-06-22 18:36:15,489 [INFO]    [FAIL] unnamed_table - Applied 1 action(s)

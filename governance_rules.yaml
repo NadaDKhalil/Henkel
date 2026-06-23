@@ -1,0 +1,34 @@
+
+rules:
+
+  - name: "All datasets must have owners"
+    enabled: true
+
+    conditions:
+      - property: hasOwner
+        operator: equals
+        expected: true
+    on_pass:
+      - action: add_tag
+        tag: "urn:li:tag:Compliant"
+        description: "Dataset meets ownership requirements"
+    on_fail:
+      - action: add_tag
+        tag: "urn:li:tag:NeedsOwner"
+        description: "Dataset missing owner assignment"
+
+
+  - name: "All datasets must have descriptions"
+    enabled: true
+    conditions:
+      - property: hasDescription
+        operator: equals
+        expected: true
+    on_pass:
+      - action: add_tag
+        tag: "urn:li:tag:HasDescription"
+        description: "Dataset has a description"
+    on_fail:
+      - action: add_tag
+        tag: "urn:li:tag:NeedsDescription"
+        description: "Dataset missing description"
