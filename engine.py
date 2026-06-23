@@ -189,7 +189,7 @@ class GovernanceEngine:
             variables = {
                 "input": {
                     "types": ["DATASET"],
-                    "query": "*",  # <-- ADD THIS LINE
+                    "query": "*", 
                     "scrollId": next_scroll_id,
                     "keepAlive": True,
                     "count": 100,
