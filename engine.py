@@ -141,16 +141,16 @@ class GovernanceEngine:
         with open(config_file, 'r') as f:
             config = yaml.safe_load(f)
         
-        # Extract configs with proper structure
+
         datahub_config = config.get('datahub', {})
         engine_config = config.get('engine', {})
         logging_config = config.get('logging', {})
         
         server = datahub_config.get('server', 'http://localhost:8080')
-        # token = datahub_config.get('token')  # if needed later
+
         self.dry_run = engine_config.get('dry_run', False)
         
-        # Setup logging from config
+
         log_level = logging_config.get('level', 'INFO')
         log_file = logging_config.get('file')
         if log_file:
