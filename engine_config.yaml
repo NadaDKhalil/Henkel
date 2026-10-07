@@ -1,11 +1,11 @@
 
 datahub:
-  server: "http://host.docker.internal:8080"
+  server: "http://localhost:8080"
   token: null
   
 
 engine:
-  dry_run: true
+  dry_run: true 
 
 logging:
   level: "INFO"

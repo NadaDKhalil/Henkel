@@ -339,7 +339,7 @@ class TestExtensibility(unittest.TestCase):
         result = evaluator.evaluate(condition, dataset_with_quality)
         self.assertTrue(result)
         
-        # This required NO changes to the core engine code!
+
 
 
 if __name__ == '__main__':

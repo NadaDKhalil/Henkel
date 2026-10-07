@@ -6,6 +6,8 @@ import time
 from typing import List, Dict, Any, Optional, Callable
 from dataclasses import dataclass, field
 from enum import Enum
+from datahub.ingestion.graph.client import DataHubGraph, DatahubClientConfig
+from datahub.specific.dataset import DatasetPatchBuilder
 
 import yaml
 import requests
@@ -25,8 +27,6 @@ class Operator(Enum):
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
     LESS_THAN = "less_than"
-
-
 
 @dataclass
 class Condition:
@@ -50,6 +50,7 @@ class Rule:
     conditions: List[Condition]
     on_pass: List[Action]
     on_fail: List[Action]
+    description: str = None    
 
 
 class ConditionEvaluator:
@@ -286,40 +287,67 @@ class GovernanceRuleEngine:
             self._add_tag(dataset, action)
 
     def _add_tag(self, dataset: Dict, action: Action):
-    dataset_urn = make_dataset_urn(
+        dataset_urn = make_dataset_urn(
         platform=dataset['platform'],
         name=dataset['name']
     )
-    tag_urn = action.tag
+        tag_urn = action.tag
 
-    if self.dry_run:
-        self.logger.info(f"   [DRY RUN] Would add tag '{tag_urn}' to {dataset['name']}")
-        return
+        if self.dry_run:
+            self.logger.info(f"   [DRY RUN] Would add tag '{tag_urn}' to {dataset['name']}")
+            return
     
-    try:
-        from datahub.metadata.schema_classes import (
-            ChangeTypeClass,
-            GlobalTagsClass,
-            TagAssociationClass,
-        )
+        try:
+            from datahub.metadata.schema_classes import (
+             ChangeTypeClass,
+             GlobalTagsClass,
+             TagAssociationClass,
+            )
         
-        tag_association = TagAssociationClass(tag=tag_urn)
-        global_tags = GlobalTagsClass(tags=[tag_association])
+            tag_association = TagAssociationClass(tag=tag_urn)
+            global_tags = GlobalTagsClass(tags=[tag_association])
         
-        mcp = MetadataChangeProposalWrapper(
-            entityType="dataset",
-            changeType=ChangeTypeClass.UPSERT,
-            entityUrn=dataset_urn,
-            aspectName="globalTags",
-            aspect=global_tags
-        )
+            mcp = MetadataChangeProposalWrapper(
+                entityType="dataset",
+                changeType=ChangeTypeClass.UPSERT,
+                entityUrn=dataset_urn,
+                aspectName="globalTags",
+                aspect=global_tags
+            )
         
-        self.emitter.emit(mcp)
-        self.logger.info(f"Added tag '{tag_urn}' to {dataset['name']}")
+            self.emitter.emit(mcp)
+            self.logger.info(f"Added tag '{tag_urn}' to {dataset['name']}")
         
-    except Exception as e:
-        self.logger.error(f"Failed to add tag to {dataset['name']}: {e}")
-        
+        except Exception as e:
+            self.logger.error(f"Failed to add tag to {dataset['name']}: {e}")
+            
+    # def _add_tag(self, dataset: Dict, action: Action):
+    #     """Add a tag to a dataset without overwriting existing tags."""
+    #     dataset_urn = make_dataset_urn(
+    #         platform=dataset['platform'],
+    #         name=dataset['name']
+    #     )
+    #     tag_urn = action.tag
+
+    #     if self.dry_run:
+    #         self.logger.info(f"   [DRY RUN] Would add tag '{tag_urn}' to {dataset['name']}")
+    #         return
+
+    #     try:
+    #         # Use DatasetPatchBuilder to add tag safely (doesn't overwrite)
+    #         from datahub.specific.dataset import DatasetPatchBuilder
+    #         patch_builder = DatasetPatchBuilder(dataset_urn)
+    #         patch_builder.add_tag(tag_urn)
+            
+    #         # Emit each patch
+    #         for patch in patch_builder.build():
+    #             self.emitter.emit(patch)
+            
+    #         self.logger.info(f"✅ Added tag '{tag_urn}' to {dataset['name']}")
+            
+    #     except Exception as e:
+    #         self.logger.error(f"Failed to add tag to {dataset['name']}: {e}")
+
 def _apply_actions(self, actions: List[Action], dataset: Dict, results: Dict):
 
     for action in actions:
@@ -335,16 +363,108 @@ class DataHubClient:
         self.token = token
         self.logger = logging.getLogger('DataHubClient')
     
+    #def fetch_datasets(self, platform: Optional[str] = None) -> List[Dict[str, Any]]:
+     #   """
+      #  Fetch datasets from DataHub.
+        
+       # In production, this would use the DataHub GraphQL API.
+        #For testing, we can use mock data.
+       # """
+       # return self._fetch_mock_datasets()
+       
     def fetch_datasets(self, platform: Optional[str] = None) -> List[Dict[str, Any]]:
         """
-        Fetch datasets from DataHub.
-        
-        In production, this would use the DataHub GraphQL API.
-        For testing, we can use mock data.
+        Fetch real datasets from DataHub using GraphQL search API.
         """
-        # This is where you'd query DataHub's search API
-        # For now, we'll use a mock implementation
-        return self._fetch_mock_datasets()
+        query = """
+        query GetDatasets($start: Int, $count: Int) {
+          search(input: { type: DATASET, query: "*", start: $start, count: $count }) {
+            total
+            searchResults {
+              entity {
+                ... on Dataset {
+                  urn
+                  name
+                  platform { name }
+                  properties { description }
+                  ownership { owners { owner { ... on CorpUser { username } } } }
+                  schemaMetadata { fields { fieldPath nativeDataType } }
+                  tags { tags { tag { name } } }
+                }
+              }
+            }
+          }
+        }
+        """
+        
+        all_datasets = []
+        start = 0
+        count = 50
+        total = None
+        
+        while True:
+            variables = {"start": start, "count": count}
+            response = requests.post(
+                f"{self.server}/api/graphql",
+                json={"query": query, "variables": variables},
+                headers={"Content-Type": "application/json"}
+            )
+            response.raise_for_status()
+            data = response.json()
+            
+            search_data = data.get("data", {}).get("search", {})
+            if total is None:
+                total = search_data.get("total", 0)
+            
+            for item in search_data.get("searchResults", []):
+                entity = item.get("entity", {})
+                platform_name = entity.get("platform", {}).get("name", "")
+                
+                if platform and platform_name != platform:
+                    continue
+                
+                owners = []
+                ownership = entity.get('ownership') or {}
+                for o in ownership.get('owners', []):
+                    owner = o.get('owner', {})
+                    if owner.get('username'):
+                        owners.append(owner['username'])
+                
+                # Safe extraction of fields (handle None)
+                fields = []
+                schema = entity.get('schemaMetadata') or {}
+                for f in schema.get('fields', []):
+                    if f.get('fieldPath') and f.get('nativeDataType'):
+                        fields.append({
+                            'name': f['fieldPath'],
+                            'type': f['nativeDataType']
+                        })
+                
+                # Safe extraction of tags (handle None)
+                tags = []
+                tags_data = entity.get('tags') or {}
+                for t in tags_data.get('tags', []):
+                    if t and t.get('tag') and t['tag'].get('name'):
+                        tags.append(t['tag']['name'])
+                
+                dataset = {
+                    'name': entity.get('name', 'unknown'),
+                    'platform': platform_name,
+                    'description': (entity.get('properties') or {}).get('description', ''),
+                    'owners': owners,
+                    'fields': fields,
+                    'tags': tags,
+                    'urn': entity.get('urn')
+                }
+                all_datasets.append(dataset)
+            
+            if len(all_datasets) >= total:
+                break
+            start += count
+        
+        self.logger.info(f"✅ Fetched {len(all_datasets)} real datasets from DataHub")
+        return all_datasets
+
     
     def _fetch_mock_datasets(self) -> List[Dict[str, Any]]:
         """Mock implementation for testing."""
@@ -406,7 +526,7 @@ def setup_logging():
 def main():
     """Main entry point."""
     print("\n" + "=" * 70)
-    print("  GOVERNANCE RULES ENGINE")
+    print("  GOVERNANCE RULES ENGINE ")
     print("=" * 70 + "\n")
     
     logger = setup_logging()
@@ -414,8 +534,8 @@ def main():
     # Configuration
     RULES_FILE = "governance_rules.yaml"
     DATAHUB_SERVER = "http://localhost:8080"
-    DRY_RUN = True  # Set to False for real execution
-    
+    DRY_RUN = False  # Set to False for real execution
+     
     try:
         # Initialize engine
         engine = GovernanceRuleEngine(

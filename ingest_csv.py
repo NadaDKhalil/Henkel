@@ -31,6 +31,7 @@ def setup_logging(config):
             logging.StreamHandler(sys.stdout)
         ])
     return logging.getLogger(__name__)
+    
 class CSVDatasetReader:
     def __init__(self, file_path, delimiter=','):
         self.file_path = file_path
@@ -84,7 +85,7 @@ def main():
             if dry_run:
                 logger.info(f"   [DRY RUN] Would emit dataset properties")
                 logger.info(f"   [DRY RUN] Would emit schema with {len(dataset['fields'])} fields")
-                logger.info(f"   [DRY RUN] Would emit ownership")
+                logger.info(f"   [DRY RUN] Would emit ownership ie:{dataset['owner']} ")
             else: 
                 emitter.emit(
                     MetadataChangeProposalWrapper(

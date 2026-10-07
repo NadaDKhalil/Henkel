@@ -128,3 +128,27 @@ FileNotFoundError: CSV file not found: datasets.csv
 2026-06-22 18:22:42,808 - INFO -    ✅ Emitted schema (4 fields)
 2026-06-22 18:22:42,948 - INFO -    ✅ Emitted ownership (1 owners)
 2026-06-22 18:22:42,948 - INFO -    ✅ Successfully ingested!
+2026-07-26 18:15:48,832 - INFO - 📄 Reading: evolve_test.csv
+2026-07-26 18:15:48,832 - INFO - 📊 Found 1 datasets
+2026-07-26 18:15:48,832 - INFO - ✅ Connected to DataHub at http://host.docker.internal:8080
+2026-07-26 18:15:48,832 - INFO - 
+[1/1] Processing Nadatest_table...
+2026-07-26 18:15:48,833 - INFO -    Dataset URN: urn:li:dataset:(urn:li:dataPlatform:postgres,Nadatest_table,PROD)
+2026-07-26 18:15:48,833 - INFO -    Platform URN: urn:li:dataPlatform:postgres
+2026-07-26 18:15:48,858 - WARNING - Retrying (_WeightedRetry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPConnection(host='host.docker.internal', port=8080): Failed to resolve 'host.docker.internal' ([Errno 8] nodename nor servname provided, or not known)")': /aspects?action=ingestProposal
+2026-07-26 18:15:52,865 - WARNING - Retrying (_WeightedRetry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPConnection(host='host.docker.internal', port=8080): Failed to resolve 'host.docker.internal' ([Errno 8] nodename nor servname provided, or not known)")': /aspects?action=ingestProposal
+2026-07-26 18:16:00,873 - WARNING - Retrying (_WeightedRetry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPConnection(host='host.docker.internal', port=8080): Failed to resolve 'host.docker.internal' ([Errno 8] nodename nor servname provided, or not known)")': /aspects?action=ingestProposal
+2026-07-26 18:16:16,882 - WARNING - Retrying (_WeightedRetry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPConnection(host='host.docker.internal', port=8080): Failed to resolve 'host.docker.internal' ([Errno 8] nodename nor servname provided, or not known)")': /aspects?action=ingestProposal
+2026-07-26 18:16:16,891 - ERROR -    ❌ Failed: ('Unable to emit metadata to DataHub GMS', {'message': 'HTTPConnectionPool(host=\'host.docker.internal\', port=8080): Max retries exceeded with url: /aspects?action=ingestProposal (Caused by NameResolutionError("HTTPConnection(host=\'host.docker.internal\', port=8080): Failed to resolve \'host.docker.internal\' ([Errno 8] nodename nor servname provided, or not known)"))'})
+2026-07-26 18:24:47,751 - INFO - 📄 Reading: evolve_test.csv
+2026-07-26 18:24:47,752 - INFO - 📊 Found 1 datasets
+2026-07-26 18:24:47,753 - INFO - ✅ Connected to DataHub at http://host.docker.internal:8080
+2026-07-26 18:24:47,753 - INFO - 
+[1/1] Processing Nadatest_table...
+2026-07-26 18:24:47,753 - INFO -    Dataset URN: urn:li:dataset:(urn:li:dataPlatform:postgres,Nadatest_table,PROD)
+2026-07-26 18:24:47,753 - INFO -    Platform URN: urn:li:dataPlatform:postgres
+2026-07-26 18:24:47,762 - WARNING - Retrying (_WeightedRetry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPConnection(host='host.docker.internal', port=8080): Failed to resolve 'host.docker.internal' ([Errno 8] nodename nor servname provided, or not known)")': /aspects?action=ingestProposal
+2026-07-26 18:24:51,768 - WARNING - Retrying (_WeightedRetry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPConnection(host='host.docker.internal', port=8080): Failed to resolve 'host.docker.internal' ([Errno 8] nodename nor servname provided, or not known)")': /aspects?action=ingestProposal
+2026-07-26 18:24:59,773 - WARNING - Retrying (_WeightedRetry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPConnection(host='host.docker.internal', port=8080): Failed to resolve 'host.docker.internal' ([Errno 8] nodename nor servname provided, or not known)")': /aspects?action=ingestProposal
+2026-07-26 18:25:15,782 - WARNING - Retrying (_WeightedRetry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NameResolutionError("HTTPConnection(host='host.docker.internal', port=8080): Failed to resolve 'host.docker.internal' ([Errno 8] nodename nor servname provided, or not known)")': /aspects?action=ingestProposal
+2026-07-26 18:25:15,790 - ERROR -    ❌ Failed: ('Unable to emit metadata to DataHub GMS', {'message': 'HTTPConnectionPool(host=\'host.docker.internal\', port=8080): Max retries exceeded with url: /aspects?action=ingestProposal (Caused by NameResolutionError("HTTPConnection(host=\'host.docker.internal\', port=8080): Failed to resolve \'host.docker.internal\' ([Errno 8] nodename nor servname provided, or not known)"))'})

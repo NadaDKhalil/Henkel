@@ -1,5 +1,5 @@
 datahub:
-  server: "http://host.docker.internal:8080"
+  server:  "http://localhost:8080"
   token: null
   
 source:
@@ -8,8 +8,9 @@ source:
     delimiter: ","
 
 ingestion:
-  dry_run: false
+  dry_run: False
   batch_size: 10
+
 
 logging:
   level: "INFO"
