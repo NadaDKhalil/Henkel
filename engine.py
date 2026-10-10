@@ -14,6 +14,7 @@ from datahub.metadata.schema_classes import (
     AuditStampClass,
 )
 from datahub.specific.dataset import DatasetPatchBuilder
+from datahub.metadata.schema_classes import TagAssociationClass 
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -33,10 +34,10 @@ class TagManager:
             tag_properties = TagPropertiesClass(
                 name=tag_name,
                 description=f"Governance tag: {tag_name}",
-                created=AuditStampClass(
-                    time=0,
-                    actor=make_user_urn("governance_engine"),
-                )
+                # created=AuditStampClass(
+                #     time=0,
+                #     actor=make_user_urn("governance_engine"),
+                # )
             )
             
             mcp = MetadataChangeProposalWrapper(
@@ -64,8 +65,9 @@ class TagManager:
         try:
             self.ensure_tag_exists(tag_name)          
             patch_builder = DatasetPatchBuilder(dataset_urn)
-            patch_builder.add_tag(tag_urn)
-            
+            #patch_builder.add_tag(tag_urn)
+            patch_builder.add_tag(TagAssociationClass(tag=tag_urn))
+
             for patch in patch_builder.build():
                 self.emitter.emit(patch)
             
@@ -103,13 +105,16 @@ class ConditionEvaluator:
         query = """
         query GetDataset($urn: String!) {
             dataset(urn: $urn) {
-                ownership { owners { owner { ... on CorpUser { username } } } }
+                ownership { owners { owner {   ... on CorpUser { urn }
+                        ... on CorpGroup { urn }} } }
             }
         }
         """
         result = self.graph_client.execute_graphql(query, variables={"urn": dataset_urn})
-        dataset_data = result.get("data", {}).get("dataset", {})
+        dataset_data = result.get("data", result).get("dataset", {})
         owners = dataset_data.get("ownership", {}).get("owners", [])
+        owner_count = len(owners)
+        logger.info(f"Dataset {dataset_urn} has {owner_count} owners")
         return len(owners) > 0
 
     def _evaluate_hasDescription(self, dataset_urn: str) -> bool:
@@ -119,7 +124,7 @@ class ConditionEvaluator:
         }
         """
         result = self.graph_client.execute_graphql(query, variables={"urn": dataset_urn})
-        dataset_data = result.get("data", {}).get("dataset", {})
+        dataset_data = result.get("data", result).get("dataset", {})
         description = dataset_data.get("properties", {}).get("description", "")
         return bool(description and description.strip())
 
@@ -141,16 +146,16 @@ class GovernanceEngine:
         with open(config_file, 'r') as f:
             config = yaml.safe_load(f)
         
-
+        # Extract configs with proper structure
         datahub_config = config.get('datahub', {})
         engine_config = config.get('engine', {})
         logging_config = config.get('logging', {})
         
         server = datahub_config.get('server', 'http://localhost:8080')
-
-        self.dry_run = engine_config.get('dry_run', False)
+        # token = datahub_config.get('token')  # if needed later
+        self.dry_run = engine_config.get('dry_run', True)
         
-
+        # Setup logging from config
         log_level = logging_config.get('level', 'INFO')
         log_file = logging_config.get('file')
         if log_file:
@@ -173,6 +178,19 @@ class GovernanceEngine:
             return config.get('rules', [])
 
     def get_datasets(self, platform_filter: Optional[str] = None) -> List[str]:
+        test_query = """
+        query TestConnection {
+         dataset(urn: "urn:li:dataset:(urn:li:dataPlatform:kafka,SampleKafkaDataset,PROD)") {
+            urn
+         }
+        }
+         """
+        try:
+            test_result = self.graph_client.execute_graphql(test_query)
+            logger.info(f"Connection test result: {test_result}")
+        except Exception as e:
+            logger.error(f"Connection test FAILED: {e}")
+            return []
         query = """
         query ScrollDatasets($input: ScrollAcrossEntitiesInput!) {
             scrollAcrossEntities(input: $input) {
@@ -197,7 +215,10 @@ class GovernanceEngine:
             }
         
             result = self.graph_client.execute_graphql(query, variables=variables)
-            data = result.get("data", {}).get("scrollAcrossEntities", {})
+            ##logger.warning(f"FULL SCROLL RESPONSE: {result}")  # <-- ADD THIS
+            ##data = result.get("data", {}).get("scrollAcrossEntities", {})
+            data = result.get("data", result).get("scrollAcrossEntities", {})
+            
         
             for item in data.get("searchResults", []):
                 entity = item.get("entity", {})
